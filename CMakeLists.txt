@@ -10,18 +10,18 @@ add_subdirectory(externals EXCLUDE_FROM_ALL)
 add_executable(sword src/main.cpp)
 
 target_link_libraries(sword 
-	PUBLIC
-		spdlog::spdlog
-		glad::glad
-		SDL2::Main
-		glfw::glfw
-		GL
-		OpenGL
-	)
+    PUBLIC
+        spdlog::spdlog
+        glad::glad
+        SDL2::Main
+        glfw::glfw
+        GL
+        OpenGL
+    )
 
 target_include_directories(sword 
-	PUBLIC
-		src/
-	)
+    PUBLIC
+        src/
+    )
 
 add_subdirectory(src)

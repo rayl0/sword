@@ -10,12 +10,12 @@ add_library(glad::glad ALIAS glad)
 add_library(glfw::glfw ALIAS glfw)
 
 target_include_directories(glad 
-	PUBLIC
-		glad/
-	)
+    PUBLIC
+        glad/
+    )
 
 target_link_libraries(glad
-	PUBLIC
-		GL
-		dl
-	)
+    PUBLIC
+        GL
+        dl
+    )

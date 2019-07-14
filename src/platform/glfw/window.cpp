@@ -4,110 +4,110 @@
 
 namespace Hay
 {
-	static bool isGlfwInitialized = false;
-	static bool isOpenGLLoaded = false;
+    static bool isGlfwInitialized = false;
+    static bool isOpenGLLoaded = false;
 
-	static void InitGLFW()
-	{
-		glfwInit();
+    static void InitGLFW()
+    {
+        glfwInit();
 
-		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
+        glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
 
-		isGlfwInitialized = true;
-	}
+        isGlfwInitialized = true;
+    }
 
-	static void LoadGL()
-	{
-		gladLoadGL();
+    static void LoadGL()
+    {
+        gladLoadGL();
 
-		isOpenGLLoaded = true;
-	}
+        isOpenGLLoaded = true;
+    }
 
-	class GLFWwindow : public Window
-	{
-		::GLFWwindow* win = nullptr;
+    class GLFWwindow : public Window
+    {
+        ::GLFWwindow* win = nullptr;
 
-		struct WindowData
-		{
-			std::string cTitle;
+        struct WindowData
+        {
+            std::string cTitle;
 
-			int vWidth;
-			int vHeight;
-		}windowData;
+            int vWidth;
+            int vHeight;
+        }windowData;
 
-	public:
-		static GLFWwindow* Create(const WindowProps& props) {
-			return new GLFWwindow(props);
-		}
+    public:
+        static GLFWwindow* Create(const WindowProps& props) {
+            return new GLFWwindow(props);
+        }
 
-		GLFWwindow(const WindowProps& props)
-		{
-			if(!isGlfwInitialized)
-				InitGLFW();
+        GLFWwindow(const WindowProps& props)
+        {
+            if(!isGlfwInitialized)
+                InitGLFW();
 
-			windowData.cTitle = props.title;
-			windowData.vWidth = props.width;
-			windowData.vHeight = props.height;
+            windowData.cTitle = props.title;
+            windowData.vWidth = props.width;
+            windowData.vHeight = props.height;
 
-			win = glfwCreateWindow(props.width, props.height, props.title.c_str(), nullptr, nullptr);
-			glfwMakeContextCurrent(win);
+            win = glfwCreateWindow(props.width, props.height, props.title.c_str(), nullptr, nullptr);
+            glfwMakeContextCurrent(win);
 
-			if(!isOpenGLLoaded)
-				LoadGL();
+            if(!isOpenGLLoaded)
+                LoadGL();
 
-			glfwSetWindowUserPointer(win, &windowData);
-		}
+            glfwSetWindowUserPointer(win, &windowData);
+        }
 
-		~GLFWwindow()
-		{
-			glfwDestroyWindow(win);
-		}
+        ~GLFWwindow()
+        {
+            glfwDestroyWindow(win);
+        }
 
-		const int& GetWidth() const {
-			return windowData.vWidth;
-		}
+        const int& GetWidth() const {
+            return windowData.vWidth;
+        }
 
-		const int& GetHeight() const {
-			return windowData.vHeight;
-		}
+        const int& GetHeight() const {
+            return windowData.vHeight;
+        }
 
-		void SetTitle(const std::string& title)
-		{
-			glfwSetWindowTitle(win, title.c_str());
-		}
+        void SetTitle(const std::string& title)
+        {
+            glfwSetWindowTitle(win, title.c_str());
+        }
 
-		bool IsOpen() const
-		{
-			return !glfwWindowShouldClose(win);
-		}
+        bool IsOpen() const
+        {
+            return !glfwWindowShouldClose(win);
+        }
 
-		void PollEvents()
-		{
-			glfwPollEvents();
-		}
+        void PollEvents()
+        {
+            glfwPollEvents();
+        }
 
-		void MakeCurrent()
-		{
-			glfwMakeContextCurrent(win);
-		}
+        void MakeCurrent()
+        {
+            glfwMakeContextCurrent(win);
+        }
 
-		void SwapBuffers()
-		{
-			glfwSwapBuffers(win);
-		}
-	};
+        void SwapBuffers()
+        {
+            glfwSwapBuffers(win);
+        }
+    };
 
-	Window* Window::Create(const WindowProps& props)
-	{
-		return GLFWwindow::Create(props);
-	}
+    Window* Window::Create(const WindowProps& props)
+    {
+        return GLFWwindow::Create(props);
+    }
 
-	void Window::Destroy(Window* win)
-	{
-		delete win;
-	}
+    void Window::Destroy(Window* win)
+    {
+        delete win;
+    }
 }
 
 
