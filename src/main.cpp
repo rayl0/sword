@@ -1,32 +1,23 @@
 #include <spdlog/spdlog.h>
 #include <glad.h>
-#include <GLFW/glfw3.h>
+#include "core/window.h"
 
 int main(int argc, char const *argv[])
 {
-	glfwInit();
-
-	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
-
-	GLFWwindow* win = glfwCreateWindow(1280, 720, "Window", nullptr, nullptr);
-	glfwMakeContextCurrent(win);
-
-    gladLoadGL();
+	Hay::Window* win = Hay::Window::Create();
 
     glClearColor(0.0f, 0.5f, 0.3f, 1.0f);
 
-    while(!glfwWindowShouldClose(win))
+    while(win->IsOpen())
     {
-    	glfwPollEvents();
+    	win->PollEvents();
 
     	glClear(GL_COLOR_BUFFER_BIT);
 
-    	glfwSwapBuffers(win);
+    	win->SwapBuffers();
     }
 
-    glfwTerminate();
+    Hay::Window::Destroy(win);
 
 	return 0;
 }
